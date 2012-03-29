@@ -39,6 +39,11 @@ class Presentation(object):
         return '\n'.join((line.strip() for line in string.split("\n")))
 
     @staticmethod
+    def center(string, width):
+        '''Center all lines of a string horizontally.'''
+        return '\n'.join((line.center(width) for line in string.split("\n")))
+
+    @staticmethod
     def clear():
         '''Clears the screen. Should work everywhere.'''
         os.system('cls' if os.name=='nt' else 'clear')
@@ -69,7 +74,7 @@ class Presentation(object):
         print "\n"*(top_margin-1)
 
         # Strip whitespace and center it horizontally.
-        slide = self.strip_ws(slide).center(cols)
+        slide = self.center(self.strip_ws(slide), cols)
         print slide
 
     def start(self):
