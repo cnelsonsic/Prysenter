@@ -4,7 +4,7 @@ import os
 
 SHAMELESS_ADVERTISING = "Prysenter\nhttp://git.io/prysenter"
 
-class DeathByPowerPoint(NotImplemented):
+class DeathByPowerPoint(NotImplementedError):
     pass
 
 class Presentation(object):
