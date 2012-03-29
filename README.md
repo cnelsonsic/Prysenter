@@ -20,7 +20,6 @@ slides = ['Intro to Prysenter',
           'Simple',
           'Minimal',
           'Quick',
-          'Thank You.',
-          'https://github.com/cnelsonsic/Prysenter']
+          'Thank You.',]
 Presentation(slides=slides).start()
 ```
