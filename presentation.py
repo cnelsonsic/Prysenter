@@ -1,11 +1,23 @@
 #!/usr/bin/env python2.7
 # -*- coding: utf-8 -*-
 import os
+import time
+import sys
 
 SHAMELESS_ADVERTISING = "Prysenter\nhttp://git.io/prysenter"
 
-class DeathByPowerPoint(NotImplemented):
-    pass
+def typewriter(duration_between_key):
+    def transition(text):
+        for c in text:
+            sys.stdout.write(c)
+            sys.stdout.flush()
+            if not c.isspace():
+                time.sleep(duration_between_key)
+        sys.stdout.write('\n')
+    return transition
+
+def no_transition(text):
+    print text
 
 class Presentation(object):
     '''Show a text-based presentation in your terminal.
@@ -59,21 +71,15 @@ class Presentation(object):
         # TODO: Could be a fancy input loop and wait for any input at all?
         raw_input()
 
-    def transition(self, slide_a, slide_b, duration=1000):
-        '''Transition between two slides, cuz that makes people
-        like my presentation! (^o^)丿
-        @param slide_a: (SlideObject): The SlideObject to transition from.
-        @param slide_b: (SlideObject): The SlideObject to transition to.
-        @param duration: (integer): The amount of time to spend transitioning
-                                    so you don't have to actually talk.
-        @returns: The length of time people yawned during your transition.'''
-        raise DeathByPowerPoint("Transitions are not cute.")
-
     def do_slide(self, slide=None):
         '''Print the given slide to the terminal.'''
         # We weren't passed a specific slide, just show the current one.
         if not slide:
-            slide = self.current_slide
+            transition = no_transition
+            if len(self.current_slide) == 2:
+                slide, transition = self.current_slide
+            else:
+                slide = self.current_slide
 
         rows, cols = self.get_term_size()
 
@@ -90,7 +96,7 @@ class Presentation(object):
 
         # Strip whitespace and center it horizontally.
         slide = self.center(self.strip_ws(slide), cols)
-        print slide
+        transition(slide)
 
     def start(self):
         '''Start the presentation.
