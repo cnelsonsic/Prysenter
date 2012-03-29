@@ -52,6 +52,14 @@ slides = [mu('Unit Testing and Me', 'The Charles Nelson Story'),
             # Fast but bad if doing R/W.
             # Perfect for Read-Only tests.
 
+        st('Clean Up',
+            'setUpClass(cls)',
+            'del cls.thing'),
+            # I had an SQLA model hanging around on the class
+            # That I had set up in setUpClass.
+            # It was preventing other tests from running correctly
+            # Because it was still on the Class, and not on the class _instance_.
+
         'Fresh Fixtures',
             # SLOWWWWWWWWWWW
             # In-ram databases make this more tolerable.
