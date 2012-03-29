@@ -4,10 +4,14 @@
 import sys
 sys.path.extend(('.', '..'))
 
-from presentation import Presentation
+from presentation import Presentation, typewriter
+
+def trans(slide):
+    type_speed = 0.02
+    return (slide, typewriter(type_speed))
 
 slides = ['Intro to Prysenter',
-          'Prysenter does presentations',
+          trans('Prysenter does presentations'),
           'Simple',
           'Minimal',
           'Quick',
