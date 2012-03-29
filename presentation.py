@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 import os
 
+SHAMELESS_ADVERTISING = "Prysenter\nhttp://git.io/prysenter"
+
 class Presentation(object):
     '''Show a text-based presentation in your terminal.
     Make sure your font size is cranked to 72 or something
@@ -80,6 +82,10 @@ class Presentation(object):
     def start(self):
         '''Start the presentation.
         This will loop as long as there are slides left.'''
+
+        # Tack on our advertising slide:
+        self.slides.append(SHAMELESS_ADVERTISING)
+
         # This is a while instead of a for in case we implement slides that can
         # point to other slides. ¯\°_o/¯
         self.cursor(state='off')
