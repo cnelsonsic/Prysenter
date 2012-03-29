@@ -4,6 +4,9 @@ import os
 
 SHAMELESS_ADVERTISING = "Prysenter\nhttp://git.io/prysenter"
 
+class DeathByPowerPoint(NotImplemented):
+    pass
+
 class Presentation(object):
     '''Show a text-based presentation in your terminal.
     Make sure your font size is cranked to 72 or something
@@ -55,6 +58,16 @@ class Presentation(object):
         '''Wait for the presenter to hit "Enter", then return.'''
         # TODO: Could be a fancy input loop and wait for any input at all?
         raw_input()
+
+    def transition(self, slide_a, slide_b, duration=1000):
+        '''Transition between two slides, cuz that makes people
+        like my presentation! (^o^)丿
+        @param slide_a: (SlideObject): The SlideObject to transition from.
+        @param slide_b: (SlideObject): The SlideObject to transition to.
+        @param duration: (integer): The amount of time to spend transitioning
+                                    so you don't have to actually talk.
+        @returns: The length of time people yawned during your transition.'''
+        raise DeathByPowerPoint("Transitions are not cute.")
 
     def do_slide(self, slide=None):
         '''Print the given slide to the terminal.'''
