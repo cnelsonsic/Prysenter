@@ -21,7 +21,7 @@ try:
         'f_yellow': colors.Fore.YELLOW + ' ' * len(colors.Fore.YELLOW),
         'b_yellow': colors.Back.YELLOW + ' ' * len(colors.Back.YELLOW),
         'f_blue': colors.Fore.BLUE + ' ' * len(colors.Fore.BLUE),
-        'b_yellow': colors.Back.BLUE + ' ' * len(colors.Back.BLUE),
+        'b_blue': colors.Back.BLUE + ' ' * len(colors.Back.BLUE),
         'f_magenta': colors.Fore.MAGENTA + ' ' * len(colors.Fore.MAGENTA),
         'b_magenta': colors.Back.MAGENTA + ' ' * len(colors.Back.MAGENTA),
         'f_cyan': colors.Fore.CYAN + ' ' * len(colors.Fore.CYAN),
