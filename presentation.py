@@ -35,6 +35,10 @@ class Presentation(object):
         '''
         self.slides = list(slides)
         self.current_slide = self.slides[0]
+        height, width = self.get_term_size()
+        print height, width
+        for slide in self.slides:
+            self.checklen(slide, width)
 
     def __del__(self):
         # Turning the cursor on here so we get our cursor back
@@ -60,6 +64,12 @@ class Presentation(object):
     def center(string, width):
         '''Center all lines of a string horizontally.'''
         return '\n'.join((line.center(width) for line in string.split("\n")))
+
+    def checklen(self, slide, maxlen=20):
+        for line in slide.split("\n"):
+            if len(line) > maxlen:
+                self.clear()
+                raise Exception("%s was too long." % slide)
 
     @staticmethod
     def clear():
