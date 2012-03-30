@@ -45,7 +45,8 @@ slides = [
             # Make a test case: "TestDoThing".
             # And make a test method: "test_do_thing"
             #   Its silly, but it placates pythoscope
-            #       (mentioned later)
+            #       Will be used to generate test stubs
+            #       in trunk, should be in trunk Real Soon Now.
             # Then, if you have a condition you want to test:
             #   Make a test method like "test_do_thing_with_foo".
             #   Or even just "test_with_foo", if you're feeling lazy.
