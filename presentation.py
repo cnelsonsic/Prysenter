@@ -4,6 +4,9 @@ import os
 import time
 import sys
 
+# Import Color support module, uses Colorama
+import colors
+
 SHAMELESS_ADVERTISING = "Prysenter\nhttp://git.io/prysenter"
 GOBACK = ("\x1bOM", ',', '<', 'h', 'k', '[', '\\')
 
@@ -44,6 +47,8 @@ class Presentation(object):
         # Turning the cursor on here so we get our cursor back
         # even on errors.
         self.cursor()
+        if colors.HAS_COLORS:
+            colors.deinit()
 
     def cursor(self, state='on'):
         '''State should be 'on' or 'off'.'''
@@ -63,7 +68,24 @@ class Presentation(object):
     @staticmethod
     def center(string, width):
         '''Center all lines of a string horizontally.'''
-        return '\n'.join((line.center(width) for line in string.split("\n")))
+        if colors.HAS_COLORS:
+            center_string = []
+            for line in string.split("\n"):
+                strip_line = colors.strip_ANSI(line)
+                lefts, rights = "", ""
+                left_right = True
+                while len(strip_line) < width:
+                    if left_right:
+                        strip_line = " " + strip_line
+                        lefts += " "
+                    else:
+                        strip_line += " "
+                        rights += " "
+                    left_right = not left_right
+                center_string.append("".join([lefts, line, rights]))
+            return '\n'.join(center_string)
+        else:
+            return  '\n'.join((line.center(width) for line in string.split("\n")))
 
     def checklen(self, slide, maxlen=20):
         for line in slide.split("\n"):
@@ -116,13 +138,23 @@ class Presentation(object):
         # Remember that print adds a new line, hence -1.
         print "\n"*(top_margin-1)
 
+        # If colors are enabled, replace formatting with ANSI color output.
+        if colors.HAS_COLORS:
+            slide = slide.format(**colors.COLOR_DICT)
+
         # Strip whitespace and center it horizontally.
         slide = self.center(self.strip_ws(slide), cols)
+
         transition(slide)
 
     def start(self):
         '''Start the presentation.
         This will loop as long as there are slides left.'''
+
+        if colors.HAS_COLORS:
+            # Colorize Output via Colorama, autoreset enabled so
+            # text returns to original color after each slide.
+            colors.init(autoreset=True)
 
         # Tack on our advertising slide:
         self.slides.append(SHAMELESS_ADVERTISING)
@@ -160,7 +192,7 @@ if __name__ == "__main__":
     One of which is stuff.
     This slide is plain lucky.'''
 
-    slide4 = '''Oh god what are you doing.
+    slide4 = '''Oh {f_blue}god{f_reset} what are you doing.
     Why is this slide so long?!
     What is wrong with you?!!?
     Just put it on different slides.
@@ -169,5 +201,5 @@ if __name__ == "__main__":
     You should read the documentation.
     You know they're already bored.'''
 
-    p = Presentation(["asfasdf", "werqwerqewrqwerqwer", slide3, slide4])
+    p = Presentation(["{f_red}asfasdf", "werqwerqewrqwerqwer", slide3, slide4])
     p.start()
