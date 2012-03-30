@@ -4,7 +4,8 @@ import os
 import time
 import sys
 
-from colors import COLOR_DICT, HAS_COLORS, strip_ANSI
+# Import Color support module, uses Colorama
+import colors
 
 SHAMELESS_ADVERTISING = "Prysenter\nhttp://git.io/prysenter"
 GOBACK = ("\x1bOM", ',', '<', 'h', 'k', '[', '\\')
@@ -46,9 +47,8 @@ class Presentation(object):
         # Turning the cursor on here so we get our cursor back
         # even on errors.
         self.cursor()
-        if HAS_COLORS:
-            from colorama import deinit
-            deinit()
+        if colors.HAS_COLORS:
+            colors.deinit()
 
     def cursor(self, state='on'):
         '''State should be 'on' or 'off'.'''
@@ -68,10 +68,10 @@ class Presentation(object):
     @staticmethod
     def center(string, width):
         '''Center all lines of a string horizontally.'''
-        if HAS_COLORS:
+        if colors.HAS_COLORS:
             center_string = []
             for line in string.split("\n"):
-                strip_line = strip_ANSI(line)
+                strip_line = colors.strip_ANSI(line)
                 lefts, rights = "", ""
                 left_right = True
                 while len(strip_line) < width:
@@ -139,8 +139,8 @@ class Presentation(object):
         print "\n"*(top_margin-1)
 
         # If colors are enabled, replace formatting with ANSI color output.
-        if HAS_COLORS:
-            slide = slide.format(**COLOR_DICT)
+        if colors.HAS_COLORS:
+            slide = slide.format(**colors.COLOR_DICT)
 
         # Strip whitespace and center it horizontally.
         slide = self.center(self.strip_ws(slide), cols)
@@ -151,11 +151,10 @@ class Presentation(object):
         '''Start the presentation.
         This will loop as long as there are slides left.'''
 
-        if HAS_COLORS:
-            from colorama import init
+        if colors.HAS_COLORS:
             # Colorize Output via Colorama, autoreset enabled so
             # text returns to original color after each slide.
-            init(autoreset=True)
+            colors.init(autoreset=True)
 
         # Tack on our advertising slide:
         self.slides.append(SHAMELESS_ADVERTISING)

@@ -4,7 +4,7 @@ import re
 import sys
 
 try:
-    from colorama import Fore, Back, Style
+    from colorama import Fore, Back, Style, init, deinit
     HAS_COLORS = sys.stdout.isatty()
     COLOR_DICT = {
         # Foreground & Background ANSI Color Constants
