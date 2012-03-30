@@ -40,6 +40,7 @@ except ImportError:
     HAS_COLORS = False
 
 SHAMELESS_ADVERTISING = "Prysenter\nhttp://git.io/prysenter"
+GOBACK = ("\x1bOM", ',', '<', 'h', 'k', '[', '\\')
 
 def typewriter(duration_between_key):
     def transition(text):
@@ -69,6 +70,10 @@ class Presentation(object):
         '''
         self.slides = list(slides)
         self.current_slide = self.slides[0]
+        height, width = self.get_term_size()
+        print height, width
+        for slide in self.slides:
+            self.checklen(slide, width)
 
     def __del__(self):
         # Turning the cursor on here so we get our cursor back
@@ -97,18 +102,33 @@ class Presentation(object):
         '''Center all lines of a string horizontally.'''
         return '\n'.join((line.center(width) for line in string.split("\n")))
 
-        return string.format(**COLOR_DICT)
+    def checklen(self, slide, maxlen=20):
+        for line in slide.split("\n"):
+            if len(line) > maxlen:
+                self.clear()
+                raise Exception("%s was too long." % slide)
 
     @staticmethod
     def clear():
         '''Clears the screen. Should work everywhere.'''
         os.system('cls' if os.name=='nt' else 'clear')
 
-    @staticmethod
-    def wait():
+    def wait(self):
         '''Wait for the presenter to hit "Enter", then return.'''
         # TODO: Could be a fancy input loop and wait for any input at all?
-        raw_input()
+        input_ = raw_input()
+        if input_ in GOBACK:
+            self.prev_slide()
+            self.prev_slide()
+
+    def curr_slide_num(self):
+        return self.slides.index(self.current_slide)
+
+    def next_slide(self):
+        self.current_slide = self.slides[self.curr_slide_num()+1]
+
+    def prev_slide(self):
+        self.current_slide = self.slides[self.curr_slide_num()-1]
 
     def do_slide(self, slide=None):
         '''Print the given slide to the terminal.'''
@@ -154,23 +174,31 @@ class Presentation(object):
         # Tack on our advertising slide:
         self.slides.append(SHAMELESS_ADVERTISING)
 
+        # Turn off the cursor on linux machines.
+        self.cursor(state='off')
+
         # This is a while instead of a for in case we implement slides that can
         # point to other slides. ¯\°_o/¯
-        self.cursor(state='off')
         while self.slides:
             self.clear()
             self.do_slide()
-            self.wait()
+            try:
+                self.wait()
+            except KeyboardInterrupt:
+                break
 
             try:
                 # Next slide!
-                s = self.slides # Shorthand for later.
-                self.current_slide = s[s.index(self.current_slide)+1]
+                self.next_slide()
             except IndexError:
-                # Out of slides!
-                # Clear the screen before we end the presentation so junk isnt left over.
-                self.clear()
-                break
+                # Loop around
+                if self.curr_slide_num() > 0:
+                    self.current_slide = self.slides[0]
+                if self.curr_slide_num() < 0:
+                    self.current_slide = self.slides[-1]
+
+        # Clear the screen before we end the presentation so junk isnt left over.
+        self.clear()
         self.cursor()
 
 if __name__ == "__main__":
