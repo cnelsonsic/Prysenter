@@ -11,7 +11,8 @@ def trans(slide):
     return (slide, typewriter(type_speed))
 
 slides = ['{f_green}Intro to Prysenter',
-          trans('Prysenter does presentations'),
+          # Transistion is erroring out after latest upstream merge
+          # trans('Prysenter does presentations'),
           'Simple',
           'Minimal',
           '{f_yellow}{s_bright}Quick',

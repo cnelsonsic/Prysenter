@@ -4,40 +4,7 @@ import os
 import time
 import sys
 
-try:
-    import colorama as colors
-    HAS_COLORS = True
-    COLOR_DICT = {
-        # Foreground & Background ANSI Color Constants
-        # XXX:
-        # Have To append Space characters as long as the ANSI Escape
-        # codes, otherwise centering gets off in the terminal.
-        'f_black': colors.Fore.BLACK + ' ' * len(colors.Fore.BLACK),
-        'b_black': colors.Back.BLACK + ' ' * len(colors.Back.BLACK),
-        'f_red': colors.Fore.RED + ' ' * len(colors.Fore.RED),
-        'b_red': colors.Back.RED + ' ' * len(colors.Back.RED),
-        'f_green': colors.Fore.GREEN + ' ' * len(colors.Fore.GREEN),
-        'b_green': colors.Back.GREEN + ' ' * len(colors.Back.GREEN),
-        'f_yellow': colors.Fore.YELLOW + ' ' * len(colors.Fore.YELLOW),
-        'b_yellow': colors.Back.YELLOW + ' ' * len(colors.Back.YELLOW),
-        'f_blue': colors.Fore.BLUE + ' ' * len(colors.Fore.BLUE),
-        'b_blue': colors.Back.BLUE + ' ' * len(colors.Back.BLUE),
-        'f_magenta': colors.Fore.MAGENTA + ' ' * len(colors.Fore.MAGENTA),
-        'b_magenta': colors.Back.MAGENTA + ' ' * len(colors.Back.MAGENTA),
-        'f_cyan': colors.Fore.CYAN + ' ' * len(colors.Fore.CYAN),
-        'b_cyan': colors.Back.CYAN + ' ' * len(colors.Back.CYAN),
-        'f_white': colors.Fore.WHITE + ' ' * len(colors.Fore.WHITE),
-        'b_white': colors.Back.WHITE + ' ' * len(colors.Back.WHITE),
-        'f_reset': colors.Fore.RESET + ' ' * len(colors.Fore.RESET),
-        'b_reset': colors.Back.RESET + ' ' * len(colors.Back.RESET),
-        # Style Constants
-        's_dim': colors.Style.DIM + ' ' * len(colors.Style.DIM),
-        's_normal': colors.Style.NORMAL + ' ' * len(colors.Style.NORMAL),
-        's_bright': colors.Style.BRIGHT + ' ' * len(colors.Style.BRIGHT),
-        's_reset_all': colors.Style.RESET_ALL + ' ' * len(colors.Style.RESET_ALL),
-    }
-except ImportError:
-    HAS_COLORS = False
+from colors import COLOR_DICT, HAS_COLORS, strip_ANSI
 
 SHAMELESS_ADVERTISING = "Prysenter\nhttp://git.io/prysenter"
 GOBACK = ("\x1bOM", ',', '<', 'h', 'k', '[', '\\')
@@ -80,7 +47,8 @@ class Presentation(object):
         # even on errors.
         self.cursor()
         if HAS_COLORS:
-            colors.deinit()
+            from colorama import deinit
+            deinit()
 
     def cursor(self, state='on'):
         '''State should be 'on' or 'off'.'''
@@ -100,7 +68,24 @@ class Presentation(object):
     @staticmethod
     def center(string, width):
         '''Center all lines of a string horizontally.'''
-        return '\n'.join((line.center(width) for line in string.split("\n")))
+        if HAS_COLORS:
+            center_string = []
+            for line in string.split("\n"):
+                strip_line = strip_ANSI(line)
+                lefts, rights = "", ""
+                left_right = True
+                while len(strip_line) < width:
+                    if left_right:
+                        strip_line = " " + strip_line
+                        lefts += " "
+                    else:
+                        strip_line += " "
+                        rights += " "
+                    left_right = not left_right
+                center_string.append("".join([lefts, line, rights]))
+            return '\n'.join(center_string)
+        else:
+            return  '\n'.join((line.center(width) for line in string.split("\n")))
 
     def checklen(self, slide, maxlen=20):
         for line in slide.split("\n"):
@@ -167,9 +152,10 @@ class Presentation(object):
         This will loop as long as there are slides left.'''
 
         if HAS_COLORS:
+            from colorama import init
             # Colorize Output via Colorama, autoreset enabled so
             # text returns to original color after each slide.
-            colors.init(autoreset=True)
+            init(autoreset=True)
 
         # Tack on our advertising slide:
         self.slides.append(SHAMELESS_ADVERTISING)
@@ -207,7 +193,7 @@ if __name__ == "__main__":
     One of which is stuff.
     This slide is plain lucky.'''
 
-    slide4 = '''Oh god what are you doing.
+    slide4 = '''Oh {f_blue}god{f_reset} what are you doing.
     Why is this slide so long?!
     What is wrong with you?!!?
     Just put it on different slides.
