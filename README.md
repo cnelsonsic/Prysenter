@@ -8,6 +8,25 @@ Installing
 ----------
 Download and run presenter.py for an example of what it looks like.
 
+The python module, [colorama](http://pypi.python.org/pypi/colorama "colorama"), is an optional dependency for colorized output of slides.
+
+### Color Mappings
+
+* f_color maps to colorama.Fore.CODE constant.
+* b_color maps to colorama.Back.CODE constant.
+* s_color maps to colorama.Style.CODE constant.
+
+```python
+from presentation import Presentation
+slides = ["{f_red}Red Slide",
+          "{f_green}Slide",
+          "{b_white}{f_yellow}{s_bright}What is this, I don't even."]
+Presentation(slides=slides).start()
+```
+
+#### Example:
+s_color maps to colorama.Style.CODE constant.
+
 Usage
 -----
 Crank the font size on your terminal, run your presentation.
