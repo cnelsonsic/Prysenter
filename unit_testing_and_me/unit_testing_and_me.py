@@ -10,7 +10,9 @@ from formatters import multiline as mu
 from formatters import subtitle as st
 from formatters import code_subtitle as ct
 
-slides = [mu('Unit Testing and Me', 'The Charles Nelson Story'),
+slides = [
+        mu('Unit Testing and Me',
+            'The Charles Nelson Story'),
 
         'Where to Start',
         #   Huge project
