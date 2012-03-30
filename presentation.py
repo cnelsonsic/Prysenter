@@ -127,9 +127,11 @@ class Presentation(object):
         # Tack on our advertising slide:
         self.slides.append(SHAMELESS_ADVERTISING)
 
+        # Turn off the cursor on linux machines.
+        self.cursor(state='off')
+
         # This is a while instead of a for in case we implement slides that can
         # point to other slides. ¯\°_o/¯
-        self.cursor(state='off')
         while self.slides:
             self.clear()
             self.do_slide()
