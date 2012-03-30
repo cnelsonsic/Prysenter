@@ -39,6 +39,6 @@ Presentation(slides=slides).start()
 from presentation import Presentation
 slides = ["{f_red}Red Slide",
           "{f_green}Slide",
-          "{b_white}{f_yellow}{s_bright}What is this, I don't even."]
+          "{b_white}{f_yellow}{s_bright}What is this, I don't even.{s_reset_all}"]
 Presentation(slides=slides).start()
 ```
