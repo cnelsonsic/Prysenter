@@ -16,16 +16,7 @@ The python module, [colorama](http://pypi.python.org/pypi/colorama "colorama"), 
 * b_color maps to colorama.Back.CODE constant.
 * s_color maps to colorama.Style.CODE constant.
 
-```python
-from presentation import Presentation
-slides = ["{f_red}Red Slide",
-          "{f_green}Slide",
-          "{b_white}{f_yellow}{s_bright}What is this, I don't even."]
-Presentation(slides=slides).start()
-```
-
-#### Example:
-s_color maps to colorama.Style.CODE constant.
+A code example is in the Usage section below.
 
 Usage
 -----
@@ -40,5 +31,14 @@ slides = ['Intro to Prysenter',
           'Minimal',
           'Quick',
           'Thank You.',]
+Presentation(slides=slides).start()
+```
+
+#### Color Example
+```python
+from presentation import Presentation
+slides = ["{f_red}Red Slide",
+          "{f_green}Slide",
+          "{b_white}{f_yellow}{s_bright}What is this, I don't even."]
 Presentation(slides=slides).start()
 ```
