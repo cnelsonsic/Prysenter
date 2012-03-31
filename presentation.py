@@ -71,21 +71,7 @@ class Presentation(object):
     def center(string, width):
         '''Center all lines of a string horizontally.'''
         if colors.HAS_COLORS:
-            center_string = []
-            for line in string.split("\n"):
-                strip_line = colors.strip_ANSI(line)
-                lefts, rights = "", ""
-                left_right = True
-                while len(strip_line) < width:
-                    if left_right:
-                        strip_line = " " + strip_line
-                        lefts += " "
-                    else:
-                        strip_line += " "
-                        rights += " "
-                    left_right = not left_right
-                center_string.append("".join([lefts, line, rights]))
-            return '\n'.join(center_string)
+            return colors.center(string, width)
         else:
             return  '\n'.join((line.center(width) for line in string.split("\n")))
 
@@ -152,8 +138,8 @@ class Presentation(object):
         print "\n"*(top_margin-1)
 
         # If colors are enabled, replace formatting with ANSI color output.
-        if colors.HAS_COLORS:
-            slide = slide.format(**colors.COLOR_DICT)
+        # Otherwise, color tags are stripped.
+        slide = slide.format(**colors.COLOR_DICT)
 
         # Strip whitespace and center it horizontally.
         slide = self.center(self.strip_ws(slide), cols)
