@@ -5,6 +5,7 @@ import sys
 sys.path.extend(('.', '..'))
 
 from presentation import Presentation
+import pechakucha
 
 from formatters import multiline as mu
 from formatters import subtitle as st
@@ -210,4 +211,4 @@ shtf(slides, __file__)
 # with open(__file__+".notes", "w") as f:
 #     f.write(slides_and_notes)
 
-Presentation(slides=slides).start()
+Presentation(slides=slides, timeout=pechakucha.timeout).start()

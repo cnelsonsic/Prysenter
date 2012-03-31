@@ -3,6 +3,7 @@
 import os
 import time
 import sys
+from select import select
 
 # Import Color support module, uses Colorama
 import colors
@@ -31,12 +32,13 @@ class Presentation(object):
     Remember: smaller, quicker hunks of info to remind
     people what you are talking about.
     '''
-    def __init__(self, slides):
+    def __init__(self, slides, timeout=None):
         '''Initialize our presentation.
         Takes a list of slide strings like:
         >>> Presentation(['Why prysenter is cool.', 'It lets you do tiny slides.'])
         '''
         self.slides = list(slides)
+        self.timeout = timeout
         self.current_slide = self.slides[0]
         height, width = self.get_term_size()
         print height, width
@@ -98,10 +100,21 @@ class Presentation(object):
         '''Clears the screen. Should work everywhere.'''
         os.system('cls' if os.name=='nt' else 'clear')
 
+    def input(self):
+        if not self.timeout:
+            return raw_input()
+        else:
+            rlist, _, _ = select([sys.stdin], [], [], self.timeout)
+            if rlist:
+                return sys.stdin.readline()
+            else:
+                return ""
+
     def wait(self):
         '''Wait for the presenter to hit "Enter", then return.'''
         # TODO: Could be a fancy input loop and wait for any input at all?
-        input_ = raw_input()
+
+        input_ = self.input()
         if input_ in GOBACK:
             self.prev_slide()
             self.prev_slide()
