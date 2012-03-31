@@ -42,3 +42,15 @@ slides = ["{f_red}Red Slide",
           "{b_white}{f_yellow}{s_bright}What is this, I don't even.{s_reset_all}"]
 Presentation(slides=slides).start()
 ```
+
+#### Timeout Example
+You can make all your slides advance after a presentation-wide timeout:
+```python
+from presentation import Presentation
+import pechakucha
+slides = ["Pecha",
+          "Kucha",
+          "Who would ever need more",
+          "Than 20 Seconds?"]
+Presentation(slides=slides, timeout=pechakucha.timeout).start()
+```
