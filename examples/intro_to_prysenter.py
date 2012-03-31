@@ -5,6 +5,7 @@ import sys
 sys.path.extend(('.', '..'))
 
 from presentation import Presentation, typewriter
+import pechakucha
 
 def trans(slide):
     type_speed = 0.02
@@ -17,4 +18,4 @@ slides = ['{f_green}Intro to Prysenter',
           'Minimal',
           '{f_yellow}{s_bright}Quick',
           'Thank You.',]
-Presentation(slides=slides).start()
+Presentation(slides=slides, timeout=pechakucha.timeout).start()
