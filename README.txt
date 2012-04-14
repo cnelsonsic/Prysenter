@@ -31,14 +31,14 @@ New Presentations
 
 ::
 
-    from presentation import Presentation
+    from prysenter import Prysentation
     slides = ['Intro to Prysenter',
               'Prysenter presents',
               'Simple',
               'Minimal',
               'Quick',
               'Thank You.',]
-    Presentation(slides=slides).start()
+    Prysentation(slides=slides).start()
 
 
 Color Example
@@ -46,11 +46,11 @@ Color Example
 
 ::
 
-    from presentation import Presentation
+    from prysenter import Prysentation
     slides = ["{f_red}Red Slide",
               "{f_green}Slide",
               "{b_white}{f_yellow}{s_bright}What is this, I don't even.{s_reset_all}"]
-    Presentation(slides=slides).start()
+    Prysentation(slides=slides).start()
 
 Timeout Example
 ---------------
@@ -58,11 +58,10 @@ You can make all your slides advance after a presentation-wide timeout:
 
 ::
 
-    from presentation import Presentation
-    import pechakucha
+    from prysenter import Prysentation, pechakucha
     slides = ["Pecha",
               "Kucha",
               "Who would ever need more",
               "Than 20 Seconds?"]
-    Presentation(slides=slides, timeout=pechakucha.timeout).start()
+    Prysentation(slides=slides, timeout=pechakucha.timeout).start()
 
