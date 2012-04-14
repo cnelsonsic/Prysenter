@@ -1,2 +1,3 @@
 
-from prysenter import Prysentation
+from prysenter import Prysentation, typewriter
+
