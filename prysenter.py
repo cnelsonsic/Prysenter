@@ -24,7 +24,7 @@ def typewriter(duration_between_key):
 def no_transition(text):
     print text
 
-class Presentation(object):
+class Prysentation(object):
     '''Show a text-based presentation in your terminal.
     Make sure your font size is cranked to 72 or something
     equally ridiculous.
@@ -35,7 +35,7 @@ class Presentation(object):
     def __init__(self, slides, timeout=None):
         '''Initialize our presentation.
         Takes a list of slide strings like:
-        >>> Presentation(['Why prysenter is cool.', 'It lets you do tiny slides.'])
+        >>> Prysentation(['Why prysenter is cool.', 'It lets you do tiny slides.'])
         '''
         self.slides = list(slides)
         self.timeout = timeout
@@ -200,5 +200,5 @@ if __name__ == "__main__":
     You should read the documentation.
     You know they're already bored.'''
 
-    p = Presentation(["{f_red}asfasdf", "werqwerqewrqwerqwer", slide3, slide4])
+    p = Prysentation(["{f_red}asfasdf", "werqwerqewrqwerqwer", slide3, slide4])
     p.start()

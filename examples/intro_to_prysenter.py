@@ -4,7 +4,7 @@
 import sys
 sys.path.extend(('.', '..'))
 
-from presentation import Presentation, typewriter
+from prysenter import Prysentation, typewriter
 import pechakucha
 
 def trans(slide):
@@ -18,4 +18,4 @@ slides = ['{f_green}Intro to Prysenter',
           'Minimal',
           '{f_yellow}{s_bright}Quick',
           'Thank You.',]
-Presentation(slides=slides, timeout=pechakucha.timeout).start()
+Prysentation(slides=slides, timeout=pechakucha.timeout).start()
