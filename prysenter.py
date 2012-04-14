@@ -41,7 +41,6 @@ class Prysentation(object):
         self.timeout = timeout
         self.current_slide = self.slides[0]
         height, width = self.get_term_size()
-        print height, width
         for slide in self.slides:
             self.checklen(slide, width)
 
