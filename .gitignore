@@ -1,2 +1,4 @@
 *.pyc
 *.shtf
+build
+dist
