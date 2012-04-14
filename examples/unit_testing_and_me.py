@@ -4,12 +4,11 @@
 import sys
 sys.path.extend(('.', '..'))
 
-from prysenter import Prysentation
-import pechakucha
+from prysenter import Prysentation, pechakucha
 
-from formatters import multiline as mu
-from formatters import subtitle as st
-from formatters import code_subtitle as ct
+from prysenter.formatters import multiline as mu
+from prysenter.formatters import subtitle as st
+from prysenter.formatters import code_subtitle as ct
 
 slides = [
         mu('Unit Testing and Me',
@@ -203,7 +202,7 @@ slides = [
 
         ]
 
-from shtf import shtf
+from prysenter.shtf import shtf
 shtf(slides, __file__)
 
 # import pprint

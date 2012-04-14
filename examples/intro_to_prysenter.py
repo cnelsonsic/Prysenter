@@ -4,8 +4,7 @@
 import sys
 sys.path.extend(('.', '..'))
 
-from prysenter import Prysentation, typewriter
-import pechakucha
+from prysenter import Prysentation, typewriter, pechakucha
 
 def trans(slide):
     type_speed = 0.02
